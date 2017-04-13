@@ -4,15 +4,16 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const short_urls = require('./models/short_urls');
-// secret url for mLab database connection
+
 
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
 //conect to database
 
-
-mongoose.connect(process.env.MONGOLAB_URI, function(err){
+var mLabUrl = 'mongodb://short_url_user:freecodecampshort@ds159880.mlab.com:59880/short_urls';
+  
+mongoose.connect('localhost:27017' || mLabUrl, function(err){
     if (err) return console.log("error connecting db")}
 );
 
@@ -38,7 +39,7 @@ var urlToShorten = req.params.urlToShorten;
             
             var data = { 'Your url': urlToShorten, 
                        "short url": short};
-    res.json(data);
+    res.json(dbEntry);
              } else {
                  data = {"error": "Enter valid url"};
                  res.json(data)}
@@ -49,7 +50,7 @@ var urlToShorten = req.params.urlToShorten;
 app.get('/:urlToForward', function(req, res){
     var url = req.params.urlToForward;
     short_urls.findOne({'shorterUrl': url}, function (err, db){
-        console.log(db.originalUrl);
+        
         if (err) return res.send("Error reading database"); 
        else if (db===null) {return res.send("No such url in database");} else {
            var reg = new RegExp("^(http|https)://", "i");
