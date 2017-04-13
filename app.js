@@ -1,17 +1,20 @@
-
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const short_urls = require('./models/short_urls');
+
+var url = process.env.MONGOLAB_URI;
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
 //conect to database
 
 
-mongoose.connect(process.env.MONGOLAB_URI, function(err){
+mongoose.connect(url, function(err){
     if (err) return console.log("error connecting db")}
 );
 
