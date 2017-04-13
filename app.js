@@ -4,12 +4,14 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const shortUrl = require('./models/shortUrl');
+const short_urls = require('./models/short_urls');
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(__dirname + '/public'));
 //conect to database
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/shortUrls', function(err){
+
+
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/short_urls', function(err){
     if (err) return console.log("error")}
 );
 
@@ -23,7 +25,7 @@ var urlToShorten = req.params.urlToShorten;
   var validate = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
         if (validate.test(urlToShorten)) {        
             var short = Math.floor(Math.random()*100000).toString();
-            var dbEntry = new shortUrl({
+            var dbEntry = new short_urls({
                 originalUrl: urlToShorten, 
     shorterUrl: short
             })
@@ -35,16 +37,17 @@ var urlToShorten = req.params.urlToShorten;
             
             var data = { 'Your url': urlToShorten, 
                        "short url": short};
-    res.json(dbEntry);
+    res.json(data);
              } else {
-                 res.send("Enter valid url")}
+                 data = {"error": "Enter valid url"};
+                 res.json(data)}
         });
 
 // redirect to url with short url 
 
 app.get('/:urlToForward', function(req, res){
     var url = req.params.urlToForward;
-    shortUrl.findOne({'shorterUrl': url}, function (err, db){
+    short_urls.findOne({'shorterUrl': url}, function (err, db){
         if (err) return res.send("Error reading database"); 
        else if (db===null) {return res.send("No such url in database");} else {
            var reg = new RegExp("^(http|https)://", "i");
