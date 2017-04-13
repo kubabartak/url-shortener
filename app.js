@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
@@ -7,7 +5,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const short_urls = require('./models/short_urls');
 // secret url for mLab database connection
-var urlSecret = process.env.MONGOLAB_URI;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -41,7 +38,7 @@ var urlToShorten = req.params.urlToShorten;
             
             var data = { 'Your url': urlToShorten, 
                        "short url": short};
-    res.json(dbEntry);
+    res.json(data);
              } else {
                  data = {"error": "Enter valid url"};
                  res.json(data)}
