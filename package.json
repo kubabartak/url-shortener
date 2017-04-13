@@ -2,11 +2,11 @@
   "name": "url_short",
   "version": "1.0.0",
   "description": "",
-  "engines": {
-      "node": '5.11.0',
-      'npm': '4.4.4'
-  },
   "main": "app.js",
+    "engines": {
+      'npm': '4.4.4',
+      'node': '5.11.0'
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
