@@ -7,7 +7,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const short_urls = require('./models/short_urls');
 // secret url for mLab database connection
-var url = process.env.MONGOLAB_URI;
+var urlSecret = process.env.MONGOLAB_URI;
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 //conect to database
 
 
-mongoose.connect(url || 'localhost:27017/', function(err){
+mongoose.connect(process.env.MONGOLAB_URI, function(err){
     if (err) return console.log("error connecting db")}
 );
 
