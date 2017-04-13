@@ -61,7 +61,7 @@ app.get('/:urlToForward', function(req, res){
         if (err) return res.send("Error reading database"); 
        else if (db===null) {return res.send("No such url in database");} else {
            var reg = new RegExp("^(http|https)://", "i");
-          if (reg.test(url)) {res.redirect(301, db.originalUrl);}
+          if (reg.test(db.originalUrl)) {res.redirect(301, db.originalUrl);}
            else {res.redirect(301, 'http://'+ db.originalUrl)}
        }
     })
