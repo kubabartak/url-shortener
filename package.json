@@ -8,7 +8,7 @@
       "node": "5.11.0"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "author": "Jakub Bartak",
   "license": "ISC",
