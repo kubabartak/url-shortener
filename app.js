@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 //conect to database
 
 
-mongoose.connect('localhost:27017/', function(err){
+mongoose.connect(url || 'localhost:27017/', function(err){
     if (err) return console.log("error connecting db")}
 );
 
