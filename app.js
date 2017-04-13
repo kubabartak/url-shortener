@@ -15,7 +15,7 @@ app.use(express.static(__dirname + '/public'));
 //conect to database
 
 
-mongoose.connect(url || 'localhost:3000', function(err){
+mongoose.connect('localhost:27017/', function(err){
     if (err) return console.log("error connecting db")}
 );
 
@@ -41,7 +41,7 @@ var urlToShorten = req.params.urlToShorten;
             
             var data = { 'Your url': urlToShorten, 
                        "short url": short};
-    res.json(data);
+    res.json(dbEntry);
              } else {
                  data = {"error": "Enter valid url"};
                  res.json(data)}
@@ -52,10 +52,11 @@ var urlToShorten = req.params.urlToShorten;
 app.get('/:urlToForward', function(req, res){
     var url = req.params.urlToForward;
     short_urls.findOne({'shorterUrl': url}, function (err, db){
+        console.log(db.originalUrl);
         if (err) return res.send("Error reading database"); 
        else if (db===null) {return res.send("No such url in database");} else {
            var reg = new RegExp("^(http|https)://", "i");
-          if (reg.test(url)) {res.redirect(301, db.originalUrl);}
+          if (reg.test(db.originalUrl)) {res.redirect(301, db.originalUrl);}
            else {res.redirect(301, 'http://'+ db.originalUrl)}
        }
     })
