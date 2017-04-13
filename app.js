@@ -11,8 +11,8 @@ app.use(express.static(__dirname + '/public'));
 //conect to database
 
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/short_urls', function(err){
-    if (err) return console.log("error")}
+mongoose.connect(process.env.MONGOLAB_URI, function(err){
+    if (err) return console.log("error connecting db")}
 );
 
 
