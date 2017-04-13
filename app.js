@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const bodyParser = require("body-parser");
@@ -11,10 +12,10 @@ app.use(cors());
 app.use(express.static(__dirname + '/public'));
 //conect to database
 
-var mLabUrl = 'mongodb://short_url_user:freecodecampshort@ds159880.mlab.com:59880/short_urls';
+var mLabUrl = process.env.MONGOLAB_URI;
   
 mongoose.connect('localhost:27017' || mLabUrl, function(err){
-    if (err) return console.log("error connecting db")}
+    if (err) console.log("error connecting db")}
 );
 
 
